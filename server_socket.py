@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 import socket
+import threading
+
+from my_socket import MySocket
 
 BIND_ADDRESS = '0.0.0.0'
 SERVER_PORT = 8888
@@ -10,11 +13,17 @@ server_socket.bind((BIND_ADDRESS, SERVER_PORT))
 server_socket.listen(MAX_CONNECTIONS)
 
 
+def deal_client_socket(client_socket):
+    my_socket = MySocket(client_socket)
+    msg = my_socket.my_recv()
+    my_socket.my_send(msg)
+
+
 def client_thread(client_socket):
-    pass
+    return threading.Thread(target=deal_client_socket, args=(client_socket))
 
 
 while True:
     client_socket, address = server_socket.accept()
-    client_thread(client_socket)
-    client_socket.run()
+    ct = client_thread(client_socket)
+    ct.run()

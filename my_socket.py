@@ -7,8 +7,11 @@ MSGLEN = 4096
 
 class MySocket:
 
-    def __init__(self):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    def __init__(self, sock=None):
+        if sock is None:
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        else:
+            self.sock = sock
 
     def my_send(self, msg):
         total_sent = 0
