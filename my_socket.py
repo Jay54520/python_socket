@@ -12,9 +12,8 @@ class MySocket:
         else:
             self.sock = sock
 
-    def my_send(self, msg: str):
+    def my_send(self, msg: bytes):
         msg = self.complete_msg(msg)
-        msg = msg.encode('utf-8')
         total_sent = 0
         while total_sent != MSGLEN:
             sent = self.sock.send(msg[total_sent:])
