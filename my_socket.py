@@ -49,3 +49,7 @@ class MySocket:
             total_recv += len(chunk)
             chunks.append(chunk)
         return b''.join(chunks)
+
+    @property
+    def socket(self):
+        return self.sock
