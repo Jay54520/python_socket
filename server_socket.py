@@ -3,10 +3,7 @@ import socket
 import threading
 
 from my_socket import MySocket
-
-BIND_ADDRESS = '0.0.0.0'
-SERVER_PORT = 8888
-MAX_CONNECTIONS = 5
+from settings import BIND_ADDRESS, SERVER_PORT, MAX_CONNECTIONS
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind((BIND_ADDRESS, SERVER_PORT))
@@ -20,10 +17,13 @@ def deal_client_socket(client_socket):
 
 
 def client_thread(client_socket):
-    return threading.Thread(target=deal_client_socket, args=(client_socket))
+    return threading.Thread(target=deal_client_socket, args=(client_socket, ))
 
 
 while True:
     client_socket, address = server_socket.accept()
     ct = client_thread(client_socket)
-    ct.run()
+    try:
+        ct.run()
+    except RuntimeError as e:
+        print(e)
