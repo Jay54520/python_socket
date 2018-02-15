@@ -14,6 +14,7 @@ def deal_client_socket(client_socket):
     my_socket = MySocket(client_socket)
     msg = my_socket.my_recv()
     my_socket.my_send(msg)
+    my_socket.socket.close()
 
 
 def client_thread(client_socket):
