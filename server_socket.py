@@ -46,3 +46,4 @@ while True:
             # 流程结束，从监听列表中移除
             potential_readers.remove(write_socket)
             potential_writers.remove(write_socket)
+            del recv_messages[write_socket]
